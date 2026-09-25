@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="A beautiful real-time weather application">
+
+    <title>Weather App</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="weather-app">
+
+        <!-- Header -->
+        <header class="header">
+            <h1>
+                <span>☀️</span>
+                Weather
+            </h1>
+        </header>
+
+
+        <!-- Search -->
+        <section class="search-section">
+
+            <input type="text" id="cityInput" placeholder="Search city..." autocomplete="off">
+
+            <button id="searchBtn">
+                🔍
+            </button>
+
+        </section>
+
+
+        <!-- Error Message -->
+        <p id="errorMessage" class="error-message"></p>
+
+
+        <!-- Current Weather -->
+        <section class="current-weather">
+
+            <div class="location-info">
+                <div>
+                    <h2 id="cityName">New Delhi</h2>
+                    <p id="countryName">India</p>
+                </div>
+
+                <div class="date-time">
+                    <p id="date">Monday, 22 Sep</p>
+                    <p id="time">4:30 PM</p>
+                </div>
+            </div>
+
+
+            <div class="temperature-section">
+
+                <div class="weather-icon" id="weatherIcon">
+                    ☀️
+                </div>
+
+                <div>
+                    <span id="temperature">34</span>
+                    <span class="degree">°C</span>
+                </div>
+
+            </div>
+
+
+            <p class="weather-condition" id="weatherCondition">
+                Clear Sky
+            </p>
+
+            <p class="feels-like">
+                Feels like <span id="feelsLike">35</span>°C
+            </p>
+
+        </section>
+
+        <!--  heheh -->
+        <!-- 5 Day Forecast -->
+        <section class="forecast">
+
+            <h3>5 Day Forecast</h3>
+
+            <div class="forecast-list" id="forecastList">
+
+                <div class="forecast-card">
+                    <p>Tue</p>
+                    <span>☀️</span>
+                    <strong>32°C</strong>
+                    <small>22°C</small>
+                </div>
+
+                <div class="forecast-card">
+                    <p>Wed</p>
+                    <span>🌤️</span>
+                    <strong>31°C</strong>
+                    <small>21°C</small>
+                </div>
+
+                <div class="forecast-card">
+                    <p>Thu</p>
+                    <span>☁️</span>
+                    <strong>29°C</strong>
+                    <small>20°C</small>
+                </div>
+
+                <div class="forecast-card">
+                    <p>Fri</p>
+                    <span>🌧️</span>
+                    <strong>28°C</strong>
+                    <small>19°C</small>
+                </div>
+
+                <div class="forecast-card">
+                    <p>Sat</p>
+                    <span>☀️</span>
+                    <strong>30°C</strong>
+                    <small>20°C</small>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Weather Details -->
+        <section class="weather-details">
+
+            <div class="detail">
+                <span>💧</span>
+                <div>
+                    <p>Humidity</p>
+                    <strong id="humidity">45%</strong>
+                </div>
+            </div>
+
+            <div class="detail">
+                <span>💨</span>
+                <div>
+                    <p>Wind</p>
+                    <strong id="wind">12 km/h</strong>
+                </div>
+            </div>
+
+            <div class="detail">
+                <span>👁️</span>
+                <div>
+                    <p>Visibility</p>
+                    <strong id="visibility">10 km</strong>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
