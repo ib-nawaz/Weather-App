@@ -12,11 +12,10 @@ body {
     color: white;
 
     background:
-        linear-gradient(
-            rgba(35, 55, 75, 0.25),
-            rgba(20, 35, 45, 0.45)
-        ),
+        linear-gradient(rgba(35, 55, 75, 0.25),
+            rgba(20, 35, 45, 0.45)),
         url("bg.png");
+
 
     background-size: cover;
     background-position: center;
@@ -28,7 +27,6 @@ body {
 
     padding: 30px 15px;
 }
-
 
 /* Main App */
 
@@ -56,7 +54,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+ display: flex;
+    align-items: center;
+    justify-content: center;
     margin-bottom: 25px;
 }
 
@@ -90,13 +90,13 @@ body {
 
     padding: 0 20px;
 
-    border: 1px solid rgba(255,255,255,0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 
     border-radius: 18px 0 0 18px;
 
     outline: none;
 
-    background: rgba(255,255,255,0.75);
+    background: rgba(255, 255, 255, 0.75);
 
     color: #263238;
 
@@ -139,10 +139,10 @@ body {
 
     background: rgba(105, 77, 45, 0.55);
 
-    border: 1px solid rgba(255,255,255,0.35);
+    border: 1px solid rgba(255, 255, 255, 0.35);
 
     box-shadow:
-        0 15px 35px rgba(0,0,0,0.15);
+        0 15px 35px rgba(0, 0, 0, 0.15);
 
     margin-bottom: 22px;
 }
@@ -188,10 +188,10 @@ body {
     font-size: 75px;
 
     filter:
-        drop-shadow(0 5px 8px rgba(0,0,0,0.25));
+        drop-shadow(0 5px 8px rgba(0, 0, 0, 0.25));
 }
 
-.temperature-section > div:last-child {
+.temperature-section>div:last-child {
     display: flex;
 
     align-items: flex-start;
@@ -233,7 +233,7 @@ body {
 
     background: rgba(40, 40, 35, 0.35);
 
-    border: 1px solid rgba(255,255,255,0.25);
+    border: 1px solid rgba(255, 255, 255, 0.25);
 
     margin-bottom: 22px;
 }
@@ -260,13 +260,13 @@ body {
 
     border-radius: 17px;
 
-    background: rgba(255,255,255,0.10);
+    background: rgba(255, 255, 255, 0.10);
 
     transition: 0.25s;
 }
 
 .forecast-card:hover {
-    background: rgba(255,255,255,0.18);
+    background: rgba(255, 255, 255, 0.18);
 
     transform: translateY(-3px);
 }
@@ -324,10 +324,10 @@ body {
 
     background: rgba(40, 40, 35, 0.38);
 
-    border: 1px solid rgba(255,255,255,0.20);
+    border: 1px solid rgba(255, 255, 255, 0.20);
 }
 
-.detail > span {
+.detail>span {
     font-size: 28px;
 }
 
@@ -365,6 +365,9 @@ body {
 
     body {
         padding: 15px;
+        background-size: cover;
+        background-position: left center;
+        background-attachment: fixed;
     }
 
     .weather-app {
@@ -410,4 +413,3 @@ body {
         grid-template-columns: 1fr;
     }
 }
-
