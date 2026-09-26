@@ -28,7 +28,8 @@
         <!-- Search -->
         <section class="search-section">
 
-            <input type="text" id="cityInput" placeholder="Search your city..." autocomplete="on">
+            <input type="text" id="cityInput" placeholder="Search your city..." autocomplete="on" spellcheck="false"
+                required>
 
             <button id="searchBtn">
                 🔍
@@ -60,7 +61,7 @@
             <div class="temperature-section">
 
                 <div class="weather-icon" id="weatherIcon" style="color: chartreuse;">
-                    What's Your City Condition ?
+                  Current Condition ?
                 </div>
 
                 <div>
@@ -72,60 +73,40 @@
 
 
             <p class="weather-condition" id="weatherCondition">
-                
+
             </p>
 
             <p class="feels-like ">
-                 <span id="feelsLike"></span>
+                <span id="feelsLike"></span>
             </p>
 
         </section>
 
-        <!-- 5 Day Forecast -->
-        <!-- <section class="forecast">
+        <!-- sunrise and sunset -->
+   
 
-            <h3>5 Day Forecast</h3>
+        <section class="sun-section">
 
-            <div class="forecast-list" id="forecastList">
+            <div class="sun-card">
+                <span>🌅</span>
 
-                <div class="forecast-card">
-                    <p>Tue</p>
-                    <span>☀️</span>
-                    <strong>32°C</strong>
-                    <small>22°C</small>
+                <div>
+                    <p>Sunrise</p>
+                    <strong id="sunrise"></strong>
                 </div>
-
-                <div class="forecast-card">
-                    <p>Wed</p>
-                    <span>🌤️</span>
-                    <strong>31°C</strong>
-                    <small>21°C</small>
-                </div>
-
-                <div class="forecast-card">
-                    <p>Thu</p>
-                    <span>☁️</span>
-                    <strong>29°C</strong>
-                    <small>20°C</small>
-                </div>
-
-                <div class="forecast-card">
-                    <p>Fri</p>
-                    <span>🌧️</span>
-                    <strong>28°C</strong>
-                    <small>19°C</small>
-                </div>
-
-                <div class="forecast-card">
-                    <p>Sat</p>
-                    <span>☀️</span>
-                    <strong>30°C</strong>
-                    <small>20°C</small>
-                </div>
-
             </div>
 
-        </section> -->
+            <div class="sun-card">
+                <span>🌇</span>
+
+                <div>
+                    <p>Sunset</p>
+                    <strong id="sunset"></strong>
+                </div>
+            </div>
+
+        </section>
+
 
 
         <!-- Weather Details -->

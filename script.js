@@ -13,6 +13,9 @@ let humidity = document.body.querySelector("#humidity")
 let wind = document.getElementById("wind")
 let visibility = document.getElementById("visibility")
 
+let sunrise = document.getElementById("#sunrise")
+let sunset = document.getElementById("#sunset")
+
 async function WeatherApi() {
     try {
 
@@ -22,9 +25,33 @@ async function WeatherApi() {
 
         console.log(data)
 
-        document.body.querySelector(".current-weather").style.opacity = "1"
-        document.body.querySelector(".weather-details").style.opacity = "1"
-        
+
+
+        const sunriseTime = new Date(data.sys.sunrise * 1000);
+
+        const sunrise = sunriseTime.toLocaleTimeString("en-IN", {
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+
+        document.getElementById("sunrise").textContent = sunrise;
+
+
+        const sunsetTime = new Date(data.sys.sunset * 1000);
+
+        const sunset = sunsetTime.toLocaleTimeString("en-IN", {
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+
+        document.getElementById("sunset").textContent = sunset;
+
+
+
+        document.body.querySelector(".current-weather").style.display = "block"
+        document.body.querySelector(".weather-details").style.display = "block"
+        document.body.querySelector(".sun-section").style.display = "block"
+
         cityName.innerHTML = `<b>${data.name}</b>`
         countryName.innerHTML = `<b>${data.sys.country}</b>`
         temperature.innerHTML = (`${(data.main.temp - 273.15).toFixed(1)}°C`)
@@ -80,17 +107,14 @@ async function WeatherApi() {
         humidity.innerHTML = `${data.main.humidity}%`
         wind.innerHTML = `${(data.wind.speed * 3.6).toFixed(2)} <i>km/h</i>`
         visibility.innerHTML = `${(data.visibility / 1000).toFixed(1)} km`
+
     }
     catch (err) {
-        console.log(err)
+        cityInput.value = ""
         errorMessage.innerHTML = "City not found. Please enter a valid city name."
-        document.body.querySelector(".current-weather").style.opacity = "0"
-        document.body.querySelector(".weather-details").style.opacity = "0"
-        setTimeout(() => {
-            errorMessage.innerHTML = ""
-
-        }, 2000)
-
+        document.body.querySelector(".current-weather").style.display = "none"
+        document.body.querySelector(".weather-details").style.display = "none"
+        document.body.querySelector(".sun-section").style.display = "none"
     }
 }
 
@@ -98,10 +122,16 @@ searchBtn.addEventListener("click", () => {
     WeatherApi()
 });
 
+cityInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+        searchBtn.click()
+    } else {
+        errorMessage.innerHTML = ""
+    }
+})
+
 
 
 let date = document.body.querySelector("#date")
 let time = document.body.querySelector("#time")
 
-date = new Date()
-// date.innerHTML = new Date(toUTCString();

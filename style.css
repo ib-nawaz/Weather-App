@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* font-family: monospace; */
 }
 
 body {
@@ -32,6 +33,7 @@ body {
 
 .weather-app {
     width: min(900px, 100%);
+    max-height: 200vh;
 
     padding: 30px;
 
@@ -54,7 +56,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
- display: flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 25px;
@@ -129,6 +131,40 @@ body {
     background: rgba(70, 52, 34, 0.95);
 }
 
+.sun-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.sun-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 18px;
+    margin-bottom: 2vh;
+    border-radius: 18px;
+
+    background: rgba(40, 40, 35, 0.38);
+
+    border: 1px solid rgba(255, 255, 255, 0.20);
+}
+
+.sun-card>span {
+    font-size: 28px;
+}
+
+.sun-card p {
+    font-size: 14px;
+    opacity: 0.75;
+    margin-bottom: 4px;
+}
+
+.sun-card strong {
+    font-size: 17px;
+}
 
 /* Current Weather */
 
@@ -308,8 +344,9 @@ body {
     grid-template-columns:
         repeat(3, 1fr);
 
-    gap: 15px;
+    gap: 10px;
 }
+
 
 .detail {
     display: flex;
@@ -319,7 +356,7 @@ body {
     gap: 12px;
 
     padding: 18px;
-
+    margin-top: 3vh;
     border-radius: 18px;
 
     background: rgba(40, 40, 35, 0.38);
