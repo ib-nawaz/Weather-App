@@ -1,137 +1,247 @@
-let cityInput = document.body.querySelector("#cityInput")
-let searchBtn = document.body.querySelector("#searchBtn")
-const errorMessage = document.body.querySelector("#errorMessage")
+let cityInput = document.querySelector("#cityInput");
+let searchBtn = document.querySelector("#searchBtn");
+let errorMessage = document.querySelector("#errorMessage");
 
-let cityName = document.body.querySelector("#cityName")
-let countryName = document.body.querySelector("#countryName")
-let weatherIcon = document.querySelector("#weatherIcon")
-let temperature = document.getElementById("temperature")
-let weatherCondition = document.getElementById("weatherCondition")
-let feelsLike = document.getElementById("feelsLike")
+let cityName = document.querySelector("#cityName");
+let countryName = document.querySelector("#countryName");
+let weatherIcon = document.querySelector("#weatherIcon");
+let temperature = document.querySelector("#temperature");
+let weatherCondition = document.querySelector("#weatherCondition");
+let feelsLike = document.querySelector("#feelsLike");
 
-let humidity = document.body.querySelector("#humidity")
-let wind = document.getElementById("wind")
-let visibility = document.getElementById("visibility")
+let humidity = document.querySelector("#humidity");
+let wind = document.querySelector("#wind");
+let visibility = document.querySelector("#visibility");
 
-let sunrise = document.getElementById("#sunrise")
-let sunset = document.getElementById("#sunset")
+let sunrisetext = document.querySelector("#sunrise");
+let sunsettext = document.querySelector("#sunset");
+
+let dateElement = document.querySelector("#date");
+let timeElement = document.querySelector("#time");
+
+let timeInterval;
+let currentTimezone = null;
+
+let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+];
+
+let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+];
+
+function updateDateTime() {
+
+    let now = new Date();
+    let cityTime;
+
+    if (currentTimezone === null) {
+        cityTime = now;
+    } else {
+        cityTime = new Date(
+            now.getTime() +
+            now.getTimezoneOffset() * 60000 +
+            currentTimezone * 1000
+        );
+    }
+
+    let day;
+    let date;
+    let month;
+
+    if (currentTimezone === null) {
+        day = days[cityTime.getDay()];
+        date = cityTime.getDate();
+        month = months[cityTime.getMonth()];
+        
+    } else {
+        day = days[cityTime.getUTCDay()];
+        date = cityTime.getUTCDate();
+        month = months[cityTime.getUTCMonth()];
+    }
+
+    dateElement.textContent = `${day}, ${date} ${month}`;
+
+    timeElement.textContent = cityTime.toLocaleTimeString("en-IN", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+    });
+}
+
+function showSunTime(timestamp, element) {
+
+    let sunTime = new Date(
+        (timestamp + currentTimezone) * 1000
+    );
+
+    let hour = sunTime.getUTCHours();
+    let minute = sunTime.getUTCMinutes();
+
+    let ampm = "AM";
+
+    if (hour >= 12) {
+        ampm = "PM";
+    }
+
+    if (hour > 12) {
+        hour = hour - 12;
+    }
+
+    if (hour === 0) {
+        hour = 12;
+    }
+
+    if (minute < 10) {
+        minute = "0" + minute;
+    }
+
+    element.textContent = `${hour}:${minute} ${ampm}`;
+}
 
 async function WeatherApi() {
+
     try {
 
-        const text = cityInput.value
-        let api = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${text}&APPID=975dad23652f9a3a0433704148f66078`);
-        let data = await api.json()
+        let text = cityInput.value.trim();
 
-        console.log(data)
+        if (!text) {
+            return;
+        }
 
+        let api = await fetch(
+            `https://api.openweathermap.org/data/2.5/weather?q=${text}&APPID=975dad23652f9a3a0433704148f66078`
+        );
 
+        let data = await api.json();
 
-        const sunriseTime = new Date(data.sys.sunrise * 1000);
+        if (data.cod !== 200) {
+            throw new Error("City not found");
+        }
 
-        const sunrise = sunriseTime.toLocaleTimeString("en-IN", {
-            hour: "2-digit",
-            minute: "2-digit"
-        });
+        errorMessage.textContent = "";
 
-        document.getElementById("sunrise").textContent = sunrise;
+        currentTimezone = data.timezone;
 
+        clearInterval(timeInterval);
 
-        const sunsetTime = new Date(data.sys.sunset * 1000);
+        updateDateTime();
 
-        const sunset = sunsetTime.toLocaleTimeString("en-IN", {
-            hour: "2-digit",
-            minute: "2-digit"
-        });
+        timeInterval = setInterval(updateDateTime, 1000);
 
-        document.getElementById("sunset").textContent = sunset;
+        cityName.textContent = data.name;
 
+        countryName.textContent = data.sys.country;
 
+        temperature.textContent = `${(data.main.temp - 273.15).toFixed(1)}°C`;
 
-        document.body.querySelector(".current-weather").style.display = "block"
-        document.body.querySelector(".weather-details").style.display = "block"
-        document.body.querySelector(".sun-section").style.display = "block"
+        weatherCondition.innerHTML = `${data.weather[0].main} → <b>${data.weather[0].description}</b>`;
 
-        cityName.innerHTML = `<b>${data.name}</b>`
-        countryName.innerHTML = `<b>${data.sys.country}</b>`
-        temperature.innerHTML = (`${(data.main.temp - 273.15).toFixed(1)}°C`)
-        weatherCondition.innerHTML = `${data.weather[0].main + " <b>→<b>  " + data.weather[0].description}`
+        feelsLike.textContent = `Feels like ${(data.main.feels_like - 273.15).toFixed(1)} °C`;
+
+        humidity.textContent = `${data.main.humidity}%`;
+
+        wind.innerHTML = `${(data.wind.speed * 3.6).toFixed(2)} <i>km/h</i>`;
+
+        visibility.textContent = `${(data.visibility / 1000).toFixed(1)} km`;
+
+        showSunTime(
+            data.sys.sunrise,
+            sunrisetext
+        );
+
+        showSunTime(
+            data.sys.sunset,
+            sunsettext
+        );
+
         if (data.weather[0].main === "Clear") {
-            weatherIcon.innerHTML = "☀️";
+            weatherIcon.textContent = "☀️";
         }
+
         else if (data.weather[0].main === "Clouds") {
-            weatherIcon.innerHTML = "☁️";
+            weatherIcon.textContent = "☁️";
         }
+
         else if (data.weather[0].main === "Rain") {
-            weatherIcon.innerHTML = "🌧️";
+            weatherIcon.textContent = "🌧️";
         }
+
         else if (data.weather[0].main === "Drizzle") {
-            weatherIcon.innerHTML = "🌦️";
+            weatherIcon.textContent = "🌦️";
         }
+
         else if (data.weather[0].main === "Thunderstorm") {
-            weatherIcon.innerHTML = "⛈️";
+            weatherIcon.textContent = "⛈️";
         }
+
         else if (data.weather[0].main === "Snow") {
-            weatherIcon.innerHTML = "❄️";
+            weatherIcon.textContent = "❄️";
         }
+
         else if (data.weather[0].main === "Mist") {
-            weatherIcon.innerHTML = "🌫️";
+            weatherIcon.textContent = "🌫️";
         }
+
         else if (data.weather[0].main === "Smoke") {
-            weatherIcon.innerHTML = "💨";
+            weatherIcon.textContent = "💨";
         }
+
         else if (data.weather[0].main === "Haze") {
-            weatherIcon.innerHTML = "🌫️";
+            weatherIcon.textContent = "🌫️";
         }
+
         else if (data.weather[0].main === "Dust") {
-            weatherIcon.innerHTML = "🌪️";
+            weatherIcon.textContent = "🌪️";
         }
+
         else if (data.weather[0].main === "Fog") {
-            weatherIcon.innerHTML = "🌫️";
+            weatherIcon.textContent = "🌫️";
         }
+
         else if (data.weather[0].main === "Sand") {
-            weatherIcon.innerHTML = "🌪️";
+            weatherIcon.textContent = "🌪️";
         }
+
         else if (data.weather[0].main === "Ash") {
-            weatherIcon.innerHTML = "🌋";
+            weatherIcon.textContent = "🌋";
         }
+
         else if (data.weather[0].main === "Squall") {
-            weatherIcon.innerHTML = "💨";
+            weatherIcon.textContent = "💨";
         }
+
         else if (data.weather[0].main === "Tornado") {
-            weatherIcon.innerHTML = "🌪️";
+            weatherIcon.textContent = "🌪️";
         }
 
-        feelsLike.innerHTML = `Feels like ${(data.main.feels_like - 273.15).toFixed(1)} °C`;
+        document.querySelector(".current-weather").style.display = "block";
 
-        humidity.innerHTML = `${data.main.humidity}%`
-        wind.innerHTML = `${(data.wind.speed * 3.6).toFixed(2)} <i>km/h</i>`
-        visibility.innerHTML = `${(data.visibility / 1000).toFixed(1)} km`
+        document.querySelector(".weather-details").style.display = "grid";
+
+        document.querySelector(".sun-section").style.display = "grid";
 
     }
+
     catch (err) {
-        cityInput.value = ""
-        errorMessage.innerHTML = "City not found. Please enter a valid city name."
-        document.body.querySelector(".current-weather").style.display = "none"
-        document.body.querySelector(".weather-details").style.display = "none"
-        document.body.querySelector(".sun-section").style.display = "none"
+        cityInput.value = "";
+        errorMessage.textContent = "City not found. Please enter a valid city name.";
+        document.querySelector(".current-weather").style.display = "none";
+        document.querySelector(".weather-details").style.display = "none";
+        document.querySelector(".sun-section").style.display = "none";
     }
 }
 
-searchBtn.addEventListener("click", () => {
-    WeatherApi()
-});
+searchBtn.addEventListener("click", WeatherApi);
 
 cityInput.addEventListener("keypress", (e) => {
+
     if (e.key === "Enter") {
-        searchBtn.click()
-    } else {
-        errorMessage.innerHTML = ""
+        WeatherApi();
     }
-})
+    else {
+        errorMessage.textContent = "";
+    }
+});
 
+updateDateTime();
 
-
-let date = document.body.querySelector("#date")
-let time = document.body.querySelector("#time")
-
+timeInterval = setInterval(updateDateTime, 1000);
