@@ -2,21 +2,19 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* font-family: monospace; */
 }
 
 body {
     min-height: 100vh;
-
     font-family: Arial, Helvetica, sans-serif;
-
     color: white;
 
     background:
-        linear-gradient(rgba(35, 55, 75, 0.25),
-            rgba(20, 35, 45, 0.45)),
+        linear-gradient(
+            rgba(35, 55, 75, 0.25),
+            rgba(20, 35, 45, 0.45)
+        ),
         url("bg.png");
-
 
     background-size: cover;
     background-position: center;
@@ -29,7 +27,10 @@ body {
     padding: 30px 15px;
 }
 
-/* Main App */
+
+/* =========================
+   MAIN APP
+========================= */
 
 .weather-app {
     width: min(900px, 100%);
@@ -50,15 +51,15 @@ body {
 }
 
 
-/* Header */
+/* =========================
+   HEADER
+========================= */
 
 .header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    display: flex;
     align-items: center;
     justify-content: center;
+
     margin-bottom: 25px;
 }
 
@@ -75,13 +76,12 @@ body {
 }
 
 
-
-
-/* Search */
+/* =========================
+   SEARCH
+========================= */
 
 .search-section {
     display: flex;
-
     margin-bottom: 25px;
 }
 
@@ -131,20 +131,34 @@ body {
     background: rgba(70, 52, 34, 0.95);
 }
 
+
+/* =========================
+   SUN SECTION
+========================= */
+
 .sun-section {
     display: grid;
+
     grid-template-columns: repeat(2, 1fr);
+
     gap: 15px;
+
+    width: 100%;
+
     margin: 15px 0;
 }
 
 .sun-card {
     display: flex;
+
     align-items: center;
-    gap: 12px;
+
+    gap: 15px;
+
+    width: 100%;
 
     padding: 18px;
-    margin-bottom: 2vh;
+
     border-radius: 18px;
 
     background: rgba(40, 40, 35, 0.38);
@@ -152,13 +166,15 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.20);
 }
 
-.sun-card>span {
-    font-size: 28px;
+.sun-card > span {
+    font-size: 30px;
 }
 
 .sun-card p {
     font-size: 14px;
+
     opacity: 0.75;
+
     margin-bottom: 4px;
 }
 
@@ -166,7 +182,10 @@ body {
     font-size: 17px;
 }
 
-/* Current Weather */
+
+/* =========================
+   CURRENT WEATHER
+========================= */
 
 .current-weather {
     padding: 30px;
@@ -208,7 +227,9 @@ body {
 }
 
 
-/* Temperature */
+/* =========================
+   TEMPERATURE
+========================= */
 
 .temperature-section {
     display: flex;
@@ -224,10 +245,12 @@ body {
     font-size: 75px;
 
     filter:
-        drop-shadow(0 5px 8px rgba(0, 0, 0, 0.25));
+        drop-shadow(
+            0 5px 8px rgba(0, 0, 0, 0.25)
+        );
 }
 
-.temperature-section>div:last-child {
+.temperature-section > div:last-child {
     display: flex;
 
     align-items: flex-start;
@@ -260,7 +283,9 @@ body {
 }
 
 
-/* Forecast */
+/* =========================
+   FORECAST
+========================= */
 
 .forecast {
     padding: 25px;
@@ -283,8 +308,7 @@ body {
 .forecast-list {
     display: grid;
 
-    grid-template-columns:
-        repeat(5, 1fr);
+    grid-template-columns: repeat(5, 1fr);
 
     gap: 12px;
 }
@@ -336,27 +360,33 @@ body {
 }
 
 
-/* Details */
+/* =========================
+   WEATHER DETAILS
+========================= */
 
 .weather-details {
     display: grid;
 
-    grid-template-columns:
-        repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
 
-    gap: 10px;
+    gap: 15px;
+
+    width: 100%;
+
+    margin-top: 15px;
 }
-
 
 .detail {
     display: flex;
-    
+
     align-items: center;
 
-    gap: 12px;
+    gap: 15px;
+
+    width: 100%;
 
     padding: 18px;
-    margin-top: 3vh;
+
     border-radius: 18px;
 
     background: rgba(40, 40, 35, 0.38);
@@ -364,7 +394,7 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.20);
 }
 
-.detail>span {
+.detail > span {
     font-size: 28px;
 }
 
@@ -381,7 +411,9 @@ body {
 }
 
 
-/* Error */
+/* =========================
+   ERROR
+========================= */
 
 .error-message {
     min-height: 20px;
@@ -396,15 +428,22 @@ body {
 }
 
 
-/* Mobile */
+/* =========================
+   MOBILE
+========================= */
 
-@media (max-width: 650px) {
+@media (max-width: 680px) {
 
     body {
         padding: 15px;
+
         background-size: cover;
+
         background-position: left center;
+
         background-attachment: fixed;
+
+        overflow-x: hidden;
     }
 
     .weather-app {
@@ -414,7 +453,7 @@ body {
     }
 
     .header h1 {
-        font-size: 30px;
+        font-size: 25px;
     }
 
     .current-weather {
@@ -432,11 +471,23 @@ body {
     }
 
     #temperature {
-        font-size: 60px;
+        font-size: 30px;
     }
 
     .weather-icon {
-        font-size: 55px;
+        font-size: 50px;
+    }
+
+    /* SUN CARDS → ONE BY ONE */
+
+    .sun-section {
+        grid-template-columns: 1fr;
+    }
+
+    /* WEATHER DETAILS → ONE BY ONE */
+
+    .weather-details {
+        grid-template-columns: 1fr;
     }
 
     .forecast-list {
@@ -446,7 +497,22 @@ body {
         overflow-x: auto;
     }
 
-    .weather-details {
-        grid-template-columns: 1fr;
+    #cityInput {
+        width: 190px;
+    }
+
+    .sun-card,
+    .detail {
+        padding: 12px;
+    }
+
+    .sun-card > span,
+    .detail > span {
+        font-size: 25px;
+    }
+
+    .sun-card strong,
+    .detail strong {
+        font-size: 16px;
     }
 }
